@@ -16,7 +16,7 @@ if (!fs.existsSync(cache)) {
 }
 
 const app = express();
-const upload = multer({ dest: cache });
+const upload = multer({ dest: absoluteCachePath });
 const inventoryList = [];
 let nextId = 1;
 
@@ -78,7 +78,7 @@ app.get('/inventory/:id/photo', (req, res) => {
     if (!item || !item.PhotoFilename) {
         return res.status(404).send({ error: 'Фото або річ з таким ID не знайдена.' });
     }
-    const filePath = path.join(cache, item.PhotoFilename);
+    const filePath = path.join(absoluteCachePath, item.PhotoFilename);
     if (!fs.existsSync(filePath)) {
          return res.status(404).send({ error: 'Файл фото відсутній у кеші.' });
     }
