@@ -19,10 +19,9 @@ const app = express();
 const upload = multer({ dest: absoluteCachePath });
 const inventoryList = [];
 let nextId = 1;
-
+const absoluteCachePath = path.resolve(cache);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 const getPhotoUrl = (id) => `/inventory/${id}/photo`;
 
 app.post('/register', upload.single('photo'), (req, res) => {
