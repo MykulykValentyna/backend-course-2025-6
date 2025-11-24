@@ -100,6 +100,16 @@ app.put('/inventory/:id/photo', upload.single('photo'), (req, res) => {
     res.status(200).json(item);
 });
 
+app.delete('/inventory/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = inventoryList.findIndex(i => i.ID === id);
+    if (index === -1) {
+        return res.status(404).send({ error: 'Річ з таким ID не знайдена.' });
+    }
+    inventoryList.splice(index, 1);
+    res.status(200).send({ message: `Річ з ID ${id} успішно видалена.` });
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
