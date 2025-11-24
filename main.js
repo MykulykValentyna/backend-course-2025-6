@@ -118,6 +118,34 @@ app.get('/SearchForm.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'SearchForm.html'));
 });
 
+app.post('/search', (req, res) => {
+    const { id, includePhoto } = req.body;
+    const searchId = parseInt(id);
+    if (isNaN(searchId)) {
+        return res.status(400).send({ error: 'Недійсний ID для пошуку.' });
+    }
+    const item = inventoryList.find(i => i.ID === searchId);
+    if (!item) {
+        return res.status(404).send({ error: `Річ з ID ${id} не знайдена.` });
+    }
+    const responseData = {
+        ID: item.ID,
+        InventoryName: item.InventoryName,
+        Description: item.Description
+    };
+    if (includePhoto === 'on' && item.PhotoFilename) {
+        responseData.PhotoUrl = getPhotoUrl(item.ID);
+    }
+    res.status(200).json(responseData);
+});
+
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'POST' && req.method !== 'PUT' && req.method !== 'DELETE') {
+        return res.status(405).send({ error: 'Метод не дозволено (Method not allowed)' });
+    }
+    res.status(404).send({ error: 'Ресурс не знайдено' });
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
