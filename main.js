@@ -60,6 +60,18 @@ app.get('/inventory/:id', (req, res) => {
     });
 });
 
+app.put('/inventory/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const item = inventoryList.find(i => i.ID === id);
+    if (!item) {
+        return res.status(404).send({ error: 'Річ з таким ID не знайдена.' });
+    }
+    const { inventory_name, description } = req.body;
+    if (inventory_name !== undefined) item.InventoryName = inventory_name;
+    if (description !== undefined) item.Description = description;
+    res.status(200).json(item);
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
