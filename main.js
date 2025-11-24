@@ -16,10 +16,10 @@ if (!fs.existsSync(cache)) {
 }
 
 const app = express();
+const absoluteCachePath = path.resolve(cache);
 const upload = multer({ dest: absoluteCachePath });
 const inventoryList = [];
 let nextId = 1;
-const absoluteCachePath = path.resolve(cache);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const getPhotoUrl = (id) => `/inventory/${id}/photo`;
