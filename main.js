@@ -110,6 +110,10 @@ app.delete('/inventory/:id', (req, res) => {
     res.status(200).send({ message: `Річ з ID ${id} успішно видалена.` });
 });
 
+app.get('/RegisterForm.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'RegisterForm.html'));
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
