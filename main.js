@@ -117,8 +117,8 @@ app.get('/SearchForm.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'SearchForm.html'));
 });
 
-app.post('/search', (req, res) => {
-    const { id, includePhoto } = req.body;
+app.get('/search', (req, res) => {
+    const { id, includePhoto } = req.query;
     const searchId = parseInt(id);
     if (isNaN(searchId)) {
         return res.status(400).send({ error: 'Недійсний ID для пошуку.' });
