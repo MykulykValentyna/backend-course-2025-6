@@ -114,6 +114,10 @@ app.get('/RegisterForm.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'RegisterForm.html'));
 });
 
+app.get('/SearchForm.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'SearchForm.html'));
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
