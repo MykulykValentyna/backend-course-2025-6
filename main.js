@@ -48,6 +48,18 @@ app.get('/inventory', (req, res) => {
     })));
 });
 
+app.get('/inventory/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const item = inventoryList.find(i => i.ID === id);
+    if (!item) {
+        return res.status(404).send({ error: 'Річ з таким ID не знайдена.' });
+    }
+    res.status(200).json({
+        ...item,
+        PhotoUrl: item.PhotoFilename ? getPhotoUrl(id) : null
+    });
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
