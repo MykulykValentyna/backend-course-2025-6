@@ -72,6 +72,20 @@ app.put('/inventory/:id', (req, res) => {
     res.status(200).json(item);
 });
 
+app.get('/inventory/:id/photo', (req, res) => {
+    const id = parseInt(req.params.id);
+    const item = inventoryList.find(i => i.ID === id);
+    if (!item || !item.PhotoFilename) {
+        return res.status(404).send({ error: 'Фото або річ з таким ID не знайдена.' });
+    }
+    const filePath = path.join(cache, item.PhotoFilename);
+    if (!fs.existsSync(filePath)) {
+         return res.status(404).send({ error: 'Файл фото відсутній у кеші.' });
+    }
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.status(200).sendFile(filePath);
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
