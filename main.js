@@ -41,6 +41,13 @@ app.post('/register', upload.single('photo'), (req, res) => {
     res.status(201).json(newInventory);
 });
 
+app.get('/inventory', (req, res) => {
+    res.status(200).json(inventoryList.map(item => ({
+        ...item,
+        PhotoUrl: item.PhotoFilename ? getPhotoUrl(item.ID) : null
+    })));
+});
+
 app.listen(port, host, () => {
     console.log(`Сервер запущено на http://${host}:${port}`);
     console.log(`Кеш-директорія: ${cache}`);
