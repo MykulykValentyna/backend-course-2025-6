@@ -138,6 +138,9 @@ app.get('/search', (req, res) => {
     res.status(200).json(responseData);
 });
 
+const swaggerDocument = YAML.load('./swagger.yaml'); 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use((req, res, next) => {
     if (req.method !== 'GET' && req.method !== 'POST' && req.method !== 'PUT' && req.method !== 'DELETE') {
         return res.status(405).send({ error: 'Метод не дозволено (Method not allowed)' });
