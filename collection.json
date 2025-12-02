@@ -209,25 +209,24 @@
 		{
 			"name": "New Request",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"includePhoto\": \"on\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{HOST}}/search?id=1&includePhoto=on",
+					"raw": "{{HOST}}/search",
 					"host": [
 						"{{HOST}}"
 					],
 					"path": [
 						"search"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						},
-						{
-							"key": "includePhoto",
-							"value": "on"
-						}
 					]
 				}
 			},
